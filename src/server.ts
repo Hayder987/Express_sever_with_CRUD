@@ -41,7 +41,7 @@ const initDB = async () => {
 initDB();
 
 // post route
-app.post("/post", async (req: Request, res: Response) => {
+app.post("/api/users", async (req: Request, res: Response) => {
   try {
     const { name, email, password, age } = req.body;
 
@@ -53,19 +53,43 @@ app.post("/post", async (req: Request, res: Response) => {
       [name, email, password, age],
     );
 
-    res.status(200).json({
+    res.status(201).json({
       status: true,
       message: "SuccessFully",
       data: result.rows[0],
     });
-  } catch (error:any) {
-    res.status(200).json({
-      status: true,
+  } catch (error: any) {
+    res.status(500).json({
+      status: false,
       message: error.message,
       data: error,
     });
   }
 });
+
+// get all data
+app.get("/api/users", async (req: Request, res: Response) => {
+  try {
+    const result = await pool.query(`
+        SELECT * FROM users
+        `);
+
+    res.status(200).json({
+      status: true,
+      message: "SuccessFully",
+      data: result.rows,
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: false,
+      message: error.message,
+      data: error,
+    });
+  }
+});
+
+
+
 
 // Root Route
 app.get("/", (req: Request, res: Response) => {
