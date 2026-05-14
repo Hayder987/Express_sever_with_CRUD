@@ -55,7 +55,7 @@ app.post("/api/users", async (req: Request, res: Response) => {
 
     res.status(201).json({
       status: true,
-      message: "SuccessFully",
+      message: "User Create SuccessFully",
       data: result.rows[0],
     });
   } catch (error: any) {
@@ -76,7 +76,7 @@ app.get("/api/users", async (req: Request, res: Response) => {
 
     res.status(200).json({
       status: true,
-      message: "SuccessFully",
+      message: "User Get SuccessFully",
       data: result.rows,
     });
   } catch (error: any) {
@@ -88,8 +88,41 @@ app.get("/api/users", async (req: Request, res: Response) => {
   }
 });
 
+// get single user data
 
+app.get("/api/users/:id", async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
 
+    const result = await pool.query(
+      `
+          SELECT * FROM users
+          WHERE id=$1
+        `,
+      [id],
+    );
+
+    if (result.rows.length === 0) {
+      res.status(200).json({
+        status: false,
+        message: "User Not Found",
+        data: {},
+      });
+    }
+
+    res.status(200).json({
+      status: true,
+      message: "User Get SuccessFully",
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      status: false,
+      message: error.message,
+      data: error,
+    });
+  }
+});
 
 // Root Route
 app.get("/", (req: Request, res: Response) => {
