@@ -8,6 +8,8 @@ const createUser = async (req: Request, res: Response) => {
   try {
     const result = await userServices.createUserIntoDb(req.body);
 
+    delete result.rows[0].password;
+
     sendResponse(res, 201, true, "User Create SuccessFully", result.rows[0]);
 
   } catch (error: any) {
@@ -20,7 +22,9 @@ const getAllUser = async (req: Request, res: Response) => {
   try {
     const result = await userServices.getAlluserFromDb();
 
-    sendResponse(res, 201, true, "All User Get SuccessFully", result.rows);
+    const withOutPassWord = result.rows.map(({password, ...rest})=> rest);
+
+    sendResponse(res, 201, true, "All User Get SuccessFully", withOutPassWord);
   } catch (error: any) {
     sendResponse(res, 500, false, error.message, error);
   }
@@ -37,6 +41,8 @@ const getSingleUser = async (req: Request, res: Response) => {
      if (result.rows.length === 0) {
       sendResponse(res, 404, false, "User Not found", {});
     };
+
+    delete result.rows[0].password
     
     sendResponse(res, 201, true, "User Get SuccessFully", result.rows[0]);
   } catch (error: any) {
