@@ -3,7 +3,7 @@ import { pool } from "../../db";
 const createProfileIntoDB = async (payload: any) =>{
   const {user_id, bio, address, phone, gender} = payload;
 
-  const user =await pool.query(`
+  const user = await pool.query(`
     SELECT * FROM users WHERE id=$1
     `, [user_id]);
 
