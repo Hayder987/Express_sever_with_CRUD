@@ -38,7 +38,7 @@ const getSingleUser = async (req: Request, res: Response) => {
       sendResponse(res, 404, false, "User Not found", {});
     };
     
-    sendResponse(res, 201, true, "All User Get SuccessFully", result.rows[0]);
+    sendResponse(res, 201, true, "User Get SuccessFully", result.rows[0]);
   } catch (error: any) {
     sendResponse(res, 500, false, error.message, error);
   }
@@ -55,7 +55,7 @@ const updateUser = async (req: Request, res: Response) => {
       sendResponse(res, 404, false, "User Not found", {});
     }
 
-   sendResponse(res, 201, true, "All User Update SuccessFully", result.rows[0]);
+   sendResponse(res, 201, true, "User Update SuccessFully", result.rows[0]);
   } catch (error: any) {
    sendResponse(res, 500, false, error.message, error);
   }
@@ -72,7 +72,7 @@ const deleteUser = async (req: Request, res: Response) => {
       sendResponse(res, 404, false, "User Not found", {});
     };
    
-    sendResponse(res, 201, true, "All User deleted SuccessFully", {});
+    sendResponse(res, 201, true, "User deleted SuccessFully", {});
 
   } catch (error: any) {
     sendResponse(res, 500, false, error.message, error);
