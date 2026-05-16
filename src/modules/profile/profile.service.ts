@@ -18,7 +18,24 @@ const createProfileIntoDB = async (payload: any) =>{
     return result;
 };
 
+const getProfileFromDB = async()=>{
+    const result = await pool.query(`
+        SELECT * FROM profile
+        `);
+    return result;
+};
+
+const getSingleUserFromDB = async (id:string) =>{
+     const result = await pool.query(`
+        SELECT * FROM profile
+        WHERE id=$1
+        `, [id]);
+    return result
+}
+
 
 export const profileService = {
     createProfileIntoDB,
+    getProfileFromDB,
+    getSingleUserFromDB
 }
