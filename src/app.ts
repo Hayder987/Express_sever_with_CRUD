@@ -9,9 +9,13 @@ import profileRouter from "./modules/profile/profile.route";
 import { authRouter } from "./modules/auth/auth.route";
 const app: Application = express();
 const PORT = config.port;
+import logger from "./middleware/logger";
 
 // middleware
 app.use(express.json());
+
+// logger middleware
+app.use(logger);
 
 
 app.use("/api/users", userRoute);
